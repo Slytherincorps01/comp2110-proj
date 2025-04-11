@@ -157,14 +157,19 @@ document.addEventListener('DOMContentLoaded', function() {
         `);
         
         try {
-            await fetch(`https://formsubmit.co/ajax/${ownerEmail}`, {
+            const response = await fetch('https://formsubmit.co/ajax/julioagapito119@gmail.com', {
                 method: 'POST',
                 body: formData
             });
+    
+            if (!response.ok) {
+                console.error('Failed to send notification:', await response.text());
+            }
         } catch (error) {
             console.error('Notification failed:', error);
         }
     }
+    
     
     function notifyCustomer(order) {
         // In a real app, you would send an email/SMS here
