@@ -1,75 +1,52 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const orderForm = document.getElementById('orderForm');
     const ordersList = document.getElementById('ordersList');
-    const ownerEmail = 'youremail@example.com'; // Replace with your email
-    
+    const ownerEmail = 'julioagapito119@gmail.com'; // Your real email
+
     // Load existing orders from localStorage
     loadOrders();
-    
+
     // Handle form submission
-    orderForm.addEventListener('submit', async function(e) {
+    orderForm.addEventListener('submit', async function (e) {
         e.preventDefault();
-        
-        try {
-            // Get form values
-            const name = document.getElementById('name').value.trim();
-            const item = document.getElementById('item').value;
-            const quantity = document.getElementById('quantity').value;
-            const specialRequests = document.getElementById('special-requests').value.trim();
-            
-            // Validate inputs
-            if (!name || !item || !quantity) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Create order object
-            const order = {
-                name,
-                item,
-                quantity,
-                specialRequests: specialRequests || 'None',
-                timestamp: new Date().toISOString(),
-                status: 'Received'
-            };
-            
-            // Add order to display
-            addOrderToDisplay(order);
-            
-            // Save order to localStorage
-            saveOrder(order);
-            
-            // Send notification
-            await sendOrderNotification(order);
-            
-            // Reset form
-            orderForm.reset();
-            
-            // Show confirmation
-            showAlert(`Thank you, ${name}! Your order for ${quantity} dozen ${item} cookies has been placed!`);
-            
-        } catch (error) {
-            console.error('Order submission error:', error);
-            showAlert('There was an error processing your order. Please try again.');
+
+        // Get form values
+        const name = document.getElementById('name').value.trim();
+        const item = document.getElementById('item').value;
+        const quantity = document.getElementById('quantity').value;
+        const specialRequests = document.getElementById('special-requests').value.trim();
+
+        if (!name || !item || !quantity) {
+            alert('Please fill in all required fields');
+            return;
         }
+
+        const order = {
+            name,
+            item,
+            quantity,
+            specialRequests: specialRequests || 'None',
+            timestamp: new Date().toISOString(),
+            status: 'Received'
+        };
+
+        addOrderToDisplay(order);
+        saveOrder(order);
+        await sendOrderNotification(order);
+
+        orderForm.reset();
+        showAlert(`Thank you, ${name}! Your order for ${quantity} dozen ${item} cookies has been placed!`);
     });
-    
+
     function addOrderToDisplay(order) {
-        // Remove "no orders" message if it exists
         const noOrdersMsg = ordersList.querySelector('.no-orders');
-        if (noOrdersMsg) {
-            noOrdersMsg.remove();
-        }
-        
-        // Create order card
+        if (noOrdersMsg) noOrdersMsg.remove();
+
         const orderCard = document.createElement('div');
         orderCard.className = 'order-card';
-        
-        // Format date
-        const orderDate = new Date(order.timestamp);
-        const formattedDate = orderDate.toLocaleString();
-        
-        // Create HTML for order
+
+        const formattedDate = new Date(order.timestamp).toLocaleString();
+
         orderCard.innerHTML = `
             <h3>${order.name}</h3>
             <p><strong>Status:</strong> <span class="status-${order.status.toLowerCase()}">${order.status}</span></p>
@@ -79,121 +56,75 @@ document.addEventListener('DOMContentLoaded', function() {
             <p class="order-time">Ordered at: ${formattedDate}</p>
             <button class="status-btn" data-id="${order.timestamp}">Mark as Ready</button>
         `;
-        
-        // Add to top of list
+
         ordersList.insertBefore(orderCard, ordersList.firstChild);
-        
-        // Add event listener to status button
-        orderCard.querySelector('.status-btn').addEventListener('click', function() {
+
+        orderCard.querySelector('.status-btn').addEventListener('click', function () {
             updateOrderStatus(order.timestamp, 'Ready');
         });
     }
-    
+
     function saveOrder(order) {
-        try {
-            let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-            orders.unshift(order);
-            localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
-        } catch (error) {
-            console.error('Error saving order:', error);
-        }
+        let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
+        orders.unshift(order);
+        localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
     }
-    
+
     function loadOrders() {
-        try {
-            const orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-            
-            if (orders.length > 0) {
-                // Remove "no orders" message if it exists
-                const noOrdersMsg = ordersList.querySelector('.no-orders');
-                if (noOrdersMsg) {
-                    noOrdersMsg.remove();
-                }
-                
-                // Add each order to display
-                orders.forEach(order => addOrderToDisplay(order));
-            }
-        } catch (error) {
-            console.error('Error loading orders:', error);
+        const orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
+
+        if (orders.length === 0) {
+            ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
+        } else {
+            orders.forEach(order => addOrderToDisplay(order));
         }
     }
-    
+
     function updateOrderStatus(timestamp, newStatus) {
-        try {
-            let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-            const orderIndex = orders.findIndex(o => o.timestamp === timestamp);
-            
-            if (orderIndex !== -1) {
-                orders[orderIndex].status = newStatus;
-                localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
-                
-                // Refresh display
-                ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
-                loadOrders();
-                
-                // Notify customer if status is "Ready"
-                if (newStatus === 'Ready') {
-                    const order = orders[orderIndex];
-                    notifyCustomer(order);
-                }
+        let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
+        const orderIndex = orders.findIndex(o => o.timestamp === timestamp);
+
+        if (orderIndex !== -1) {
+            orders[orderIndex].status = newStatus;
+            localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
+            ordersList.innerHTML = '';
+            loadOrders();
+
+            if (newStatus === 'Ready') {
+                notifyCustomer(orders[orderIndex]);
             }
-        } catch (error) {
-            console.error('Error updating order status:', error);
         }
     }
-    
+
     async function sendOrderNotification(order) {
-        // Using FormSubmit.co (free service)
         const formData = new FormData();
-        formData.append('_replyto', 'julioagapito119@gmail.com');
-        formData.append('_subject', `New Order: ${order.name}`);
+        formData.append('_replyto', ownerEmail);
+        formData.append('_subject', `New Order from ${order.name}`);
         formData.append('message', `
-            New Order Details:
+            New Cookie Order:
             Name: ${order.name}
             Item: ${order.item}
             Quantity: ${order.quantity} dozen
             Special Requests: ${order.specialRequests}
             Time: ${new Date(order.timestamp).toLocaleString()}
         `);
-        
+
         try {
-            const response = await fetch('https://formsubmit.co/ajax/julioagapito119@gmail.com', {
+            await fetch(`https://formsubmit.co/ajax/${ownerEmail}`, {
                 method: 'POST',
                 body: formData
             });
-    
-            if (!response.ok) {
-                console.error('Failed to send notification:', await response.text());
-            }
         } catch (error) {
             console.error('Notification failed:', error);
         }
     }
-    
-    
+
     function notifyCustomer(order) {
-        // In a real app, you would send an email/SMS here
         console.log(`Order ready notification for ${order.name}`);
-        // Example: You could integrate with Twilio for SMS or EmailJS for emails
+        // Extend this for email/SMS if needed.
     }
-    
+
     function showAlert(message) {
-        // Replace with a nicer alert system if desired
-        alert(message);
+        alert(message); // You can replace this with custom modal if you want
     }
 });
-
-// Add this to your CSS:
-/*
-.status-received { color: #FFA500; font-weight: bold; }
-.status-ready { color: #008000; font-weight: bold; }
-.status-btn {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-*/
