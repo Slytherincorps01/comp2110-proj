@@ -6,275 +6,7 @@
     <title>Lola  Cookies</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #e39f9f; /* Red primary color */
-            --primary-light: #120808;
-            --secondary: #fac21a; /* Gold accent */
-            --dark: #cc2c2c;
-            --light: #F5F5F5;
-            --gray: #E0E0E0;
-            --white: #FFFFFF;
-        }
-        
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            color: var(--dark);
-            line-height: 1.6;
-            -webkit-text-size-adjust: 100%;
-            /* Full page background image */
-            background: url('cookieinatub.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-        
-        /* Overlay to ensure content readability */
-        body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.3); /* White overlay with 70% opacity */
-            z-index: -1;
-        }
-        
-        header {
-            background: var(--dark);
-            color: var(--white);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        #logo {
-            font-weight: 700;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-        
-        #logo::before {
-            content: "🍪";
-            font-size: 1.5rem;
-        }
-        
-        .main-container {
-            padding: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .card h2 {
-            margin-top: 0;
-            color: var(--primary);
-            padding-bottom: 0.5rem;
-            font-size: 1.4rem;
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 0.95rem;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid var(--gray);
-            border-radius: 8px;
-            font-family: inherit;
-            background: var(--white);
-            font-size: 1rem;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .submit-btn {
-            background: var(--dark);
-            color: var(--white);
-            border: none;
-            padding: 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            display: block;
-            margin-top: 1.5rem;
-        }
-        
-        .submit-btn:active {
-            transform: scale(0.98);
-            background: var(--primary);
-        }
-        
-        .order-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1.1rem;
-            margin-bottom: 1rem;
-            border-left: 5px solid var(--secondary);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        
-        .order-card h3 {
-            margin: 0 0 0.5rem 0;
-            color: var(--primary);
-            font-size: 1.15rem;
-        }
-        
-        .order-card p {
-            margin: 0.4rem 0;
-            font-size: 0.95rem;
-        }
-        
-        .order-time {
-            font-size: 0.8rem;
-            color: #757575;
-            margin-top: 0.5rem !important;
-        }
-        
-        .no-orders {
-            text-align: center;
-            padding: 1.5rem;
-            color: #757575;
-            font-style: italic;
-        }
-        
-        footer {
-            background: var(--dark);
-            color: var(--white);
-            padding: 1.25rem;
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.25rem;
-            list-style: none;
-            padding: 0;
-            margin: 0.75rem 0 0 0;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        /* Mobile-friendly quantity options */
-        .quantity-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
-        }
-        
-        .quantity-choice {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            background: var(--gray);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .quantity-choice input {
-            display: none;
-        }
-        
-        .quantity-choice input:checked + .choice-content {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-        
-        .choice-content {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 6px;
-            background: var(--white);
-        }
-        
-        .choice-icon {
-            font-size: 1.5rem;
-            margin-right: 0.75rem;
-        }
-        
-        .choice-text {
-            flex: 1;
-        }
-        
-        .choice-title {
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-        }
-        
-        .choice-desc {
-            font-size: 0.85rem;
-            color: #616161;
-        }
-        
-        /* Mobile-specific adjustments */
-        @media (max-width: 480px) {
-            .card {
-                padding: 1rem;
-                border-radius: 10px;
-            }
-            
-            .card h2 {
-                font-size: 1.3rem;
-            }
-            
-            input, textarea, select {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-            }
-            
-            .submit-btn {
-                padding: 0.9rem;
-                font-size: 1rem;
-            }
-        }
+        /* Your existing styles go here */
     </style>
 </head>
 <body>
@@ -285,7 +17,7 @@
     <div class="main-container">
         <div class="card">
             <h2>Place Your Order</h2>
-            <form id="orderForm">
+            <form id="orderForm" action="https://formsubmit.co/julioagapito119@gmail.com" method="POST">
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" id="name" name="name" required placeholder="Enter your name">
@@ -415,6 +147,9 @@
                 
                 // Show confirmation
                 alert(`Thank you, ${name}!\nYour order for ${quantity} ${order.unit} of chocolate chip cookies has been placed!`);
+                
+                // Submit the form (to send to FormSubmit)
+                setTimeout(() => orderForm.submit(), 100); // Let the form continue submitting to FormSubmit
             });
             
             function addOrderToDisplay(order) {
@@ -433,7 +168,7 @@
                 const formattedDate = orderDate.toLocaleString();
                 
                 // Create HTML for order
-                orderCard.innerHTML = `
+                orderCard.innerHTML = `  
                     <h3>${order.name}</h3>
                     <p><strong>${order.item}</strong> - ${order.quantity} ${order.unit}</p>
                     ${order.specialRequests ? `<p>${order.specialRequests}</p>` : ''}
