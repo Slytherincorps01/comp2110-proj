@@ -1,85 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LOLA COOKIES</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #ff0000; /* Bright red background */
+            color: white;
+            font-family: 'Impact', 'Arial Black', sans-serif; /* Bold, blocky font similar to your image */
+            padding: 20px;
+            margin: 0;
+        }
+        
+        h1, h2 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        input, select {
+            background-color: white;
+            border: none;
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            font-family: inherit;
+        }
+        
+        .checkbox-option {
+            margin: 15px 0;
+        }
+        
+        hr {
+            border: 1px solid #ff0000;
+            margin: 20px 0;
+        }
+        
+        .error {
+            color: yellow;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <img src="cookiesinatub.jpg" alt="Lola Cookies" class="header-image">
     <div class="container">
-        <header>
-            <h1>LOLA COOKIES</h1>
-        </header>
-
-        <div class="content">
-            <div class="order-form">
-                <h2>Place Your Order</h2>
-                <form id="orderForm">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Enter your name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Cookie Type</label>
-                        <input type="text" value="Chocolate Chip Cookies" readonly class="read-only-input">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>How would you like to order?</label>
-                        <div class="quantity-options">
-                            <label class="quantity-choice">
-                                <input type="radio" name="orderType" value="tub" checked>
-                                <div class="choice-content">
-                                    <div class="choice-icon">🍯</div>
-                                    <div class="choice-text">
-                                        <div class="choice-title">By the Tub</div>
-                                        <div class="choice-desc">Perfect for sharing</div>
-                                    </div>
-                                </div>
-                            </label>
-                            
-                            <label class="quantity-choice">
-                                <input type="radio" name="orderType" value="piece">
-                                <div class="choice-content">
-                                    <div class="choice-icon">🍪</div>
-                                    <div class="choice-text">
-                                        <div class="choice-title">By the Piece</div>
-                                        <div class="choice-desc">Individual cookies</div>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group" id="quantityContainer">
-                        <label for="quantity">Number of Tubs</label>
-                        <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="special-requests">Special Instructions</label>
-                        <textarea id="special-requests" name="special-requests" placeholder="Any special requests or allergy information"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Place Order</button>
-                </form>
-            </div>
-
-            <div class="orders-display">
-                <h2>Recent Orders</h2>
-                <div id="ordersList">
-                    <p class="no-orders">No orders yet. Be the first to order!</p>
-                </div>
-            </div>
+        <h1>Lola Cookies</h1>
+        
+        <h2>Place Your Order</h2>
+        
+        <p><strong>Your Name</strong></p>
+        <input type="text" placeholder="Enter your name">
+        
+        <p><strong>Cookie Type</strong></p>
+        <select>
+            <option>Chocolate Chip Cookies</option>
+            <option>Oatmeal Raisin</option>
+            <option>Sugar Cookies</option>
+            <option>Peanut Butter</option>
+        </select>
+        
+        <p><strong>How would you like to order?</strong></p>
+        
+        <div class="checkbox-option">
+            <input type="checkbox" id="by-tub">
+            <label for="by-tub">By the Tub</label>
+            <p>Perfect for sharing</p>
         </div>
-    </div>
-
-    <button id="admin-toggle" title="Toggle Admin View">👑</button>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        
+        <div class="
