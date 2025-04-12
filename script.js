@@ -139,22 +139,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function loadOrders() {
-        try {
-            const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
-            
-            // Clear current orders
-            ordersList.innerHTML = '';
-            
-            if (orders.length === 0) {
-                ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
-            } else {
-                orders.forEach(order => addOrderToDisplay(order));
-            }
-        } catch (error) {
-            console.error('Error loading orders:', error);
-            ordersList.innerHTML = '<p class="error-message">⚠️ Error loading orders. Please refresh the page.</p>';
+    try {
+        // Check if localStorage is available
+        if (!window.localStorage) {
+            throw new Error("localStorage not available");
         }
+
+        // Get orders with the correct key
+        const ordersData = localStorage.getItem('lolaCookieOrders');
+        
+        // If no orders exist, show empty state
+        if (!ordersData) {
+            ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
+            return;
+        }
+
+        // Parse the orders
+        const orders = JSON.parse(ordersData);
+        
+        // Validate the orders array
+        if (!Array.isArray(orders)) {
+            throw new Error("Invalid orders data format");
+        }
+
+        // Clear current orders
+        ordersList.innerHTML = '';
+
+        // Display orders
+        if (orders.length === 0) {
+            ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
+        } else {
+            orders.forEach(order => addOrderToDisplay(order));
+        }
+    } catch (error) {
+        console.error('Error loading orders:', error);
+        ordersList.innerHTML = '<p class="error-message">⚠️ Error loading orders. Please refresh the page.</p>';
+        
+        // Optional: Clear corrupted data
+        localStorage.removeItem('lolaCookieOrders');
     }
+}
     
     function updateOrderStatus(timestamp, newStatus) {
         try {
