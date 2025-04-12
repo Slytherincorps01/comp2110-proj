@@ -3,132 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lola's Premium Cookies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Cookie&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Lola Cookies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #FF6B6B;
-            --primary-light: #FF8E8E;
-            --secondary: #4ECDC4;
-            --dark: #292F36;
-            --light: #F7FFF7;
-            --accent: #FFE66D;
-            --white: #FFFFFF;
+            --primary: #e39f9f;
+            --primary-light: #120808;
+            --secondary: #fac21a;
+            --dark: #cc2c2c;
+            --light: #F5F5F5;
             --gray: #E0E0E0;
-            --success: #6BCB77;
-            --warning: #FFD166;
-            --cookie-brown: #8B5A2B;
-            --text-color: #333333;
-            --bg-opacity: rgba(255, 248, 240, 0.95);
+            --white: #FFFFFF;
         }
         
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
             -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #f9f5f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: var(--dark);
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+            background: url('cookieinatub.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
         }
         
-        .header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: -1;
+        }
+        
+        header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 1rem;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            font-family: 'Cookie', cursive;
-            font-size: 2.2rem;
-            color: var(--cookie-brown);
-            text-decoration: none;
+        #logo {
+            font-weight: 700;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            justify-content: center;
         }
         
-        .logo-icon {
-            font-size: 1.8rem;
+        #logo::before {
+            content: "🍪";
+            font-size: 1.5rem;
         }
         
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1590080874088-e8e5d1a8d6e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            color: var(--white);
-            text-align: center;
-            padding: 4rem 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .hero-content {
-            max-width: 800px;
+        .main-container {
+            padding: 1rem;
+            max-width: 600px;
             margin: 0 auto;
         }
         
-        .hero h1 {
-            font-family: 'Cookie', cursive;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 2rem;
-            flex: 1;
-        }
-        
-        .order-section {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-        
-        @media (min-width: 992px) {
-            .order-section {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        .order-card, .orders-card {
-            background-color: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .order-card h2, .orders-card h2 {
-            font-family: 'Cookie', cursive;
-            font-size: 2.5rem;
-            color: var(--cookie-brown);
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 1.25rem;
             margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            padding-bottom: 0.5rem;
+            font-size: 1.4rem;
             text-align: center;
         }
         
@@ -136,898 +94,426 @@
             margin-bottom: 1.5rem;
         }
         
-        .form-group label {
+        label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--dark);
+            font-size: 0.95rem;
         }
         
-        .form-control {
+        input, textarea, select {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.9rem;
             border: 2px solid var(--gray);
             border-radius: 8px;
             font-family: inherit;
+            background: var(--white);
             font-size: 1rem;
-            transition: all 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
         }
         
-        .form-control:focus {
-            outline: none;
-            border-color: var(--cookie-brown);
-            box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.2);
-        }
-        
-        textarea.form-control {
-            min-height: 120px;
+        textarea {
+            min-height: 100px;
             resize: vertical;
         }
         
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-        
-        .radio-option {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border: 2px solid var(--gray);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .radio-option:hover {
-            border-color: var(--cookie-brown);
-        }
-        
-        .radio-option input {
-            display: none;
-        }
-        
-        .radio-option input:checked + .radio-content {
-            border-color: var(--cookie-brown);
-            background-color: rgba(139, 90, 43, 0.05);
-        }
-        
-        .radio-content {
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-        
-        .radio-icon {
-            font-size: 1.8rem;
-            margin-right: 1rem;
-            color: var(--cookie-brown);
-        }
-        
-        .radio-text h4 {
-            margin-bottom: 0.3rem;
-            color: var(--dark);
-        }
-        
-        .radio-text p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            background-color: var(--cookie-brown);
+        .submit-btn {
+            background: var(--dark);
             color: var(--white);
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
             border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
             cursor: pointer;
-            font-size: 1rem;
+            transition: all 0.2s;
             width: 100%;
-            text-align: center;
+            display: block;
+            margin-top: 1.5rem;
         }
         
-        .btn:hover {
-            background-color: #a67c52;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .submit-btn:active {
+            transform: scale(0.98);
+            background: var(--primary);
         }
         
-        .orders-list {
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-        }
-        
-        .order-item {
-            background-color: var(--light);
+        .order-card {
+            background: var(--white);
             border-radius: 10px;
-            padding: 1.5rem;
+            padding: 1.1rem;
             margin-bottom: 1rem;
-            border-left: 4px solid var(--cookie-brown);
-            transition: transform 0.3s;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         
-        .order-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        .order-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+            font-size: 1.15rem;
         }
         
-        .order-item h3 {
-            margin-bottom: 0.5rem;
-            color: var(--cookie-brown);
-            font-size: 1.2rem;
-        }
-        
-        .order-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .order-meta span {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .order-notes {
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px dashed var(--gray);
+        .order-card p {
+            margin: 0.4rem 0;
+            font-size: 0.95rem;
         }
         
         .order-time {
             font-size: 0.8rem;
-            color: #999;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+            color: #757575;
+            margin-top: 0.5rem !important;
         }
         
         .no-orders {
             text-align: center;
-            padding: 2rem;
-            color: #999;
+            padding: 1.5rem;
+            color: #757575;
             font-style: italic;
         }
         
-        .status-badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-        }
-        
-        .status-received {
-            background-color: var(--warning);
-            color: var(--dark);
-        }
-        
-        .status-ready {
-            background-color: var(--success);
+        footer {
+            background: var(--dark);
             color: var(--white);
-        }
-        
-        .action-btn {
-            margin-top: 0.8rem;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .ready-btn {
-            background-color: var(--success);
-            color: var(--white);
-        }
-        
-        .ready-btn:hover {
-            background-color: #5ab766;
-        }
-        
-        .admin-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--cookie-brown);
-            color: var(--white);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 100;
-            transition: all 0.3s;
-        }
-        
-        .admin-toggle:hover {
-            transform: scale(1.1);
-            background-color: #a67c52;
-        }
-        
-        .footer {
-            background-color: var(--cookie-brown);
-            color: var(--white);
-            padding: 2rem;
+            padding: 1.25rem;
             text-align: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
         
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        
-        .footer-logo {
-            font-family: 'Cookie', cursive;
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-        
-        .footer-about p {
-            margin-bottom: 1rem;
-            color: rgba(255,255,255,0.8);
-        }
-        
-        .social-links {
+        .footer-links {
             display: flex;
-            gap: 1rem;
             justify-content: center;
-        }
-        
-        .social-links a {
-            color: var(--white);
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--accent);
-        }
-        
-        .footer-links h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--white);
-        }
-        
-        .footer-links ul {
+            gap: 1.25rem;
             list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
+            padding: 0;
+            margin: 0.75rem 0 0 0;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
-            color: rgba(255,255,255,0.8);
+            color: var(--secondary);
             text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--white);
-        }
-        
-        .footer-contact p {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
-            color: rgba(255,255,255,0.8);
-        }
-        
-        .copyright {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.6);
+            font-weight: 500;
             font-size: 0.9rem;
         }
         
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
+        .quantity-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .quantity-choice {
+            display: flex;
             align-items: center;
-        }
-        
-        .modal-content {
-            background-color: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            position: relative;
-            animation: modalFadeIn 0.3s;
-        }
-        
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            background: none;
-            border: none;
+            padding: 0.75rem;
+            background: var(--gray);
+            border-radius: 8px;
             cursor: pointer;
-            color: #999;
+            transition: all 0.2s;
         }
         
-        .modal-close:hover {
+        .quantity-choice input {
+            display: none;
+        }
+        
+        .quantity-choice input:checked + .choice-content {
+            background: var(--secondary);
             color: var(--dark);
         }
         
-        .modal-title {
-            font-family: 'Cookie', cursive;
-            font-size: 2rem;
-            color: var(--cookie-brown);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .modal-message {
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .modal-actions {
+        .choice-content {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
+            align-items: center;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background: var(--white);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+        .choice-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+        
+        .choice-text {
+            flex: 1;
+        }
+        
+        .choice-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .choice-desc {
+            font-size: 0.85rem;
+            color: #616161;
+        }
+        
+        /* Admin toggle button */
+        #admin-toggle {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        
+        #admin-toggle:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
             }
             
-            .hero p {
+            .card h2 {
+                font-size: 1.3rem;
+            }
+            
+            input, textarea, select {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+            
+            .submit-btn {
+                padding: 0.9rem;
                 font-size: 1rem;
             }
-            
-            .order-card h2, .orders-card h2 {
-                font-size: 2rem;
-            }
-        }
-        
-        /* Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animate-fadein {
-            animation: fadeIn 0.6s ease-out forwards;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <a href="#" class="logo">
-                <i class="fas fa-cookie-bite logo-icon"></i>
-                Lola's Cookies
-            </a>
-        </nav>
+    <header>
+        <div id="logo">Lola Cookies</div>
     </header>
 
-    <section class="hero">
-        <div class="hero-content animate-fadein">
-            <h1>Handcrafted Artisan Cookies</h1>
-            <p>Made with love and the finest ingredients for that perfect homemade taste</p>
-        </div>
-    </section>
-
-    <main class="container">
-        <section class="order-section">
-            <div class="order-card">
-                <h2>Place Your Order</h2>
-                <form id="orderForm" action="https://formsubmit.co/julioagapito119@gmail.com" method="POST">
-                    <input type="hidden" name="_subject" value="New Cookie Order">
-                    <input type="hidden" name="_template" value="table">
-                    
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required placeholder="Enter your name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-control" required placeholder="Enter your email">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Cookie Selection</label>
-                        <select name="cookieType" class="form-control">
-                            <option value="Classic Chocolate Chip">Classic Chocolate Chip</option>
-                            <option value="Double Chocolate">Double Chocolate</option>
-                            <option value="Oatmeal Raisin">Oatmeal Raisin</option>
-                            <option value="Peanut Butter">Peanut Butter</option>
-                            <option value="Sugar Cookie">Sugar Cookie</option>
-                            <option value="Snickerdoodle">Snickerdoodle</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Order Type</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="orderType" value="tub" checked>
-                                <div class="radio-content">
-                                    <div class="radio-icon">🍯</div>
-                                    <div class="radio-text">
-                                        <h4>By the Tub</h4>
-                                        <p>Perfect for sharing (12 cookies per tub)</p>
-                                    </div>
-                                </div>
-                            </label>
-                            
-                            <label class="radio-option">
-                                <input type="radio" name="orderType" value="dozen">
-                                <div class="radio-content">
-                                    <div class="radio-icon">🍪🍪🍪</div>
-                                    <div class="radio-text">
-                                        <h4>By the Dozen</h4>
-                                        <p>12 individually wrapped cookies</p>
-                                    </div>
-                                </div>
-                            </label>
-                            
-                            <label class="radio-option">
-                                <input type="radio" name="orderType" value="half-dozen">
-                                <div class="radio-content">
-                                    <div class="radio-icon">🍪🍪</div>
-                                    <div class="radio-text">
-                                        <h4>Half Dozen</h4>
-                                        <p>6 individually wrapped cookies</p>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group" id="quantityContainer">
-                        <label for="quantity">Number of Tubs</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control" min="1" max="20" value="1" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="deliveryDate">Preferred Delivery/Pickup Date</label>
-                        <input type="date" id="deliveryDate" name="deliveryDate" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="specialRequests">Special Instructions</label>
-                        <textarea id="specialRequests" name="specialRequests" class="form-control" placeholder="Allergies, dietary restrictions, or special requests"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <div class="orders-card">
-                <h2>Recent Orders</h2>
-                <div class="orders-list" id="ordersList">
-                    <p class="no-orders">No orders yet. Be the first to order!</p>
+    <div class="main-container">
+        <div class="card">
+            <h2>Place Your Order</h2>
+            <form id="orderForm" action="https://formsubmit.co/julioagapito119@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Cookie Order">
+                <input type="hidden" name="_template" value="table">
+                
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your name">
                 </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-about">
-                <a href="#" class="footer-logo">
-                    <i class="fas fa-cookie-bite"></i> Lola's Cookies
-                </a>
-                <p>Artisan cookies made with love and the finest ingredients since 2010.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                
+                <div class="form-group">
+                    <label>Cookie Type</label>
+                    <input type="text" value="Chocolate Chip Cookies" readonly style="background: #EEEEEE; font-weight: 600;">
                 </div>
-            </div>
-            
-            <div class="footer-links">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">Order Online</a></li>
-                    <li><a href="#">Our Flavors</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-contact">
-                <h3>Contact Us</h3>
-                <p><i class="fas fa-map-marker-alt"></i> 123 Cookie Lane, Sweetville</p>
-                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                <p><i class="fas fa-envelope"></i> hello@lolascookies.com</p>
-                <p><i class="fas fa-clock"></i> Mon-Sat: 9am - 6pm</p>
-            </div>
+                
+                <div class="form-group">
+                    <label>How would you like to order?</label>
+                    <div class="quantity-options">
+                        <label class="quantity-choice">
+                            <input type="radio" name="orderType" value="tub" checked>
+                            <div class="choice-content">
+                                <div class="choice-icon">🍯</div>
+                                <div class="choice-text">
+                                    <div class="choice-title">By the Tub</div>
+                                    <div class="choice-desc">Perfect for sharing or parties</div>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="quantity-choice">
+                            <input type="radio" name="orderType" value="piece">
+                            <div class="choice-content">
+                                <div class="choice-icon">🍪</div>
+                                <div class="choice-text">
+                                    <div class="choice-title">By the Piece</div>
+                                    <div class="choice-desc">Individual cookies</div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="quantityContainer">
+                    <label for="quantity">Number of Tubs</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="special-requests">Special Instructions</label>
+                    <textarea id="special-requests" name="special-requests" placeholder="Any special requests or allergy information"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Place Order</button>
+            </form>
         </div>
-        
-        <div class="copyright">
-            &copy; 2023 Lola's Cookies. All rights reserved.
-        </div>
-    </footer>
 
-    <button class="admin-toggle" id="adminToggle" title="Admin Mode">
-        <i class="fas fa-crown"></i>
-    </button>
-
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <h3 class="modal-title">Order Confirmation</h3>
-            <p class="modal-message" id="modalMessage">Your order has been placed successfully!</p>
-            <div class="modal-actions">
-                <button class="btn" id="modalOk">OK</button>
+        <div class="card">
+            <h2>Recent Orders</h2>
+            <div id="ordersList">
+                <p class="no-orders">No orders yet. Be the first to order!</p>
             </div>
         </div>
     </div>
 
+    <footer>
+        <div>© 2023 Lola's Chocolate Chip Cookies</div>
+        <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">FAQ</a></li>
+        </ul>
+    </footer>
+
+    <button id="admin-toggle" title="Toggle Admin View">👑</button>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
             const orderForm = document.getElementById('orderForm');
             const ordersList = document.getElementById('ordersList');
             const quantityContainer = document.getElementById('quantityContainer');
             const orderTypeRadios = document.querySelectorAll('input[name="orderType"]');
-            const adminToggle = document.getElementById('adminToggle');
-            const orderModal = document.getElementById('orderModal');
-            const modalClose = document.getElementById('modalClose');
-            const modalOk = document.getElementById('modalOk');
-            const modalMessage = document.getElementById('modalMessage');
+            const adminToggle = document.getElementById('admin-toggle');
             
-            // State
             let adminMode = false;
-            const ownerEmail = 'julioagapito119@gmail.com';
             
-            // Initialize
-            initEventListeners();
-            loadOrders();
-            setMinDeliveryDate();
-            
-            function initEventListeners() {
-                // Admin toggle
-                adminToggle.addEventListener('click', toggleAdminView);
-                
-                // Order type selection
-                orderTypeRadios.forEach(radio => {
-                    radio.addEventListener('change', handleOrderTypeChange);
-                });
-                
-                // Form submission
-                orderForm.addEventListener('submit', handleFormSubmit);
-                
-                // Modal controls
-                modalClose.addEventListener('click', closeModal);
-                modalOk.addEventListener('click', closeModal);
-            }
-            
-            function setMinDeliveryDate() {
-                const today = new Date();
-                const dd = String(today.getDate()).padStart(2, '0');
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const yyyy = today.getFullYear();
-                const minDate = yyyy + '-' + mm + '-' + dd;
-                
-                document.getElementById('deliveryDate').min = minDate;
-            }
-            
-            function toggleAdminView() {
+            // Toggle admin view
+            adminToggle.addEventListener('click', function() {
                 adminMode = !adminMode;
-                adminToggle.title = adminMode ? 'Exit Admin Mode' : 'Admin Mode';
-                adminToggle.innerHTML = adminMode ? '<i class="fas fa-user-shield"></i>' : '<i class="fas fa-crown"></i>';
                 loadOrders();
-                
-                // Show admin notification
-                if (adminMode) {
-                    showModal('Admin Mode Activated', 'You can now view customer names and update order statuses.');
-                }
-            }
+                this.style.opacity = adminMode ? '1' : '0.5';
+                this.title = adminMode ? 'Admin Mode (Hide Names)' : 'Admin Mode (Show Names)';
+            });
             
-            function handleOrderTypeChange() {
-                const value = this.value;
-                let labelText = 'Number of ';
-                let maxValue = 20;
-                let defaultValue = 1;
-                
-                switch(value) {
-                    case 'tub':
-                        labelText += 'Tubs';
-                        break;
-                    case 'dozen':
-                        labelText += 'Dozens';
-                        maxValue = 10;
-                        break;
-                    case 'half-dozen':
-                        labelText += 'Half Dozens';
-                        maxValue = 20;
-                        break;
-                }
-                
-                quantityContainer.querySelector('label').textContent = labelText;
-                document.getElementById('quantity').max = maxValue;
-                document.getElementById('quantity').value = defaultValue;
-            }
+            // Update quantity label based on selection
+            orderTypeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'piece') {
+                        quantityContainer.querySelector('label').textContent = 'Number of Cookies';
+                        document.getElementById('quantity').max = '100';
+                        document.getElementById('quantity').value = '6';
+                    } else {
+                        quantityContainer.querySelector('label').textContent = 'Number of Tubs';
+                        document.getElementById('quantity').max = '20';
+                        document.getElementById('quantity').value = '1';
+                    }
+                });
+            });
             
-            function handleFormSubmit(e) {
+            // Handle form submission
+            orderForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 // Get form values
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const cookieType = document.querySelector('select[name="cookieType"]').value;
+                const name = document.getElementById('name').value;
                 const orderType = document.querySelector('input[name="orderType"]:checked').value;
                 const quantity = document.getElementById('quantity').value;
-                const deliveryDate = document.getElementById('deliveryDate').value;
-                const specialRequests = document.getElementById('specialRequests').value.trim();
+                const specialRequests = document.getElementById('special-requests').value;
                 
-                // Validate
-                if (!name || !email || !cookieType || !quantity || !deliveryDate) {
-                    showModal('Error', 'Please fill in all required fields.');
-                    return;
-                }
-                
-                // Create order
-                const order = createOrder(name, email, phone, cookieType, orderType, quantity, deliveryDate, specialRequests);
-                
-                // Process order
-                processOrder(order);
-                
-                // Reset form
-                resetForm();
-                
-                // Show confirmation
-                showOrderConfirmation(order);
-                
-                // Submit to FormSubmit
-                submitToFormSubmit();
-            }
-            
-            function createOrder(name, email, phone, cookieType, orderType, quantity, deliveryDate, specialRequests) {
-                let unit;
-                switch(orderType) {
-                    case 'tub': unit = 'tubs'; break;
-                    case 'dozen': unit = 'dozens'; break;
-                    case 'half-dozen': unit = 'half dozens'; break;
-                }
-                
-                return {
+                // Create order object
+                const order = {
                     name,
-                    email,
-                    phone,
-                    item: cookieType,
+                    item: "Chocolate Chip Cookies",
                     orderType,
                     quantity,
-                    unit,
-                    deliveryDate,
+                    unit: orderType === 'piece' ? 'pieces' : 'tubs',
                     specialRequests: specialRequests || 'None',
-                    timestamp: new Date().toISOString(),
-                    status: 'Received'
+                    timestamp: new Date().toISOString()
                 };
-            }
-            
-            function processOrder(order) {
+                
+                // Add order to display
                 addOrderToDisplay(order);
+                
+                // Save order to localStorage
                 saveOrder(order);
-                sendOrderNotification(order);
-            }
-            
-            function addOrderToDisplay(order) {
-                // Remove "no orders" message if exists
-                const noOrdersMsg = ordersList.querySelector('.no-orders');
-                if (noOrdersMsg) noOrdersMsg.remove();
                 
-                // Create order card
-                const orderItem = document.createElement('div');
-                orderItem.className = 'order-item';
-                
-                // Format dates
-                const orderDate = new Date(order.timestamp);
-                const formattedDate = orderDate.toLocaleString();
-                const deliveryDate = new Date(order.deliveryDate).toLocaleDateString();
-                
-                // Generate order ID
-                const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
-                
-                // Create HTML
-                orderItem.innerHTML = `
-                    <h3>${adminMode ? order.name : orderId} <span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></h3>
-                    <div class="order-meta">
-                        <span><i class="fas fa-cookie"></i> ${order.item}</span>
-                        <span><i class="fas fa-box-open"></i> ${order.quantity} ${order.unit}</span>
-                        <span><i class="fas fa-calendar-day"></i> ${deliveryDate}</span>
-                    </div>
-                    ${order.specialRequests !== 'None' ? `<div class="order-notes"><strong>Notes:</strong> ${order.specialRequests}</div>` : ''}
-                    <div class="order-time"><i class="far fa-clock"></i> Ordered: ${formattedDate}</div>
-                    ${adminMode ? `<button class="action-btn ready-btn" data-id="${order.timestamp}">Mark as Ready</button>` : ''}
-                `;
-                
-                // Add to top of list
-                ordersList.insertBefore(orderItem, ordersList.firstChild);
-                
-                // Add event listener if admin mode
-                if (adminMode) {
-                    orderItem.querySelector('.ready-btn').addEventListener('click', function() {
-                        updateOrderStatus(order.timestamp, 'Ready');
-                    });
-                }
-            }
-            
-            function saveOrder(order) {
-                try {
-                    const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
-                    orders.unshift(order);
-                    localStorage.setItem('lolaCookieOrders', JSON.stringify(orders));
-                } catch (error) {
-                    console.error('Error saving order:', error);
-                    showModal('Error', 'There was a problem saving your order. Please try again.');
-                }
-            }
-            
-            function loadOrders() {
-                try {
-                    const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
-                    
-                    // Clear current orders
-                    ordersList.innerHTML = '';
-                    
-                    if (orders.length === 0) {
-                        ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
-                    } else {
-                        orders.forEach(order => addOrderToDisplay(order));
-                    }
-                } catch (error) {
-                    console.error('Error loading orders:', error);
-                    ordersList.innerHTML = '<p class="no-orders">Error loading orders</p>';
-                }
-            }
-            
-            function updateOrderStatus(timestamp, newStatus) {
-                try {
-                    const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
-                    const orderIndex = orders.findIndex(o => o.timestamp === timestamp);
-                    
-                    if (orderIndex !== -1) {
-                        orders[orderIndex].status = newStatus;
-                        localStorage.setItem('lolaCookieOrders', JSON.stringify(orders));
-                        loadOrders();
-                        
-                        if (newStatus === 'Ready') {
-                            notifyCustomer(orders[orderIndex]);
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error updating status:', error);
-                }
-            }
-            
-            async function sendOrderNotification(order) {
-                try {
-                    const formData = new FormData();
-                    formData.append('_replyto', ownerEmail);
-                    formData.append('_subject', `New Order from ${order.name}`);
-                    formData.append('message', `
-                        New Cookie Order:
-                        Name: ${order.name}
-                        Email: ${order.email}
-                        Phone: ${order.phone || 'Not provided'}
-                        Item: ${order.item}
-                        Quantity: ${order.quantity} ${order.unit}
-                        Delivery Date: ${order.deliveryDate}
-                        Special Requests: ${order.specialRequests}
-                        Time: ${new Date(order.timestamp).toLocaleString()}
-                    `);
-                    
-                    await fetch(`https://formsubmit.co/ajax/${ownerEmail}`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                } catch (error) {
-                    console.error('Notification failed:', error);
-                }
-            }
-            
-            function notifyCustomer(order) {
-                console.log(`Order ready notification for ${order.name}`);
-                // In a real app, implement SMS/email notification here
-            }
-            
-            function resetForm() {
+                // Reset form
                 orderForm.reset();
                 document.querySelector('input[name="orderType"][value="tub"]').checked = true;
                 quantityContainer.querySelector('label').textContent = 'Number of Tubs';
                 document.getElementById('quantity').max = '20';
                 document.getElementById('quantity').value = '1';
-                setMinDeliveryDate();
-            }
-            
-            function showOrderConfirmation(order) {
+                
+                // Show confirmation
                 const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
-                showModal('Thank You!', `Your order #${orderId} for ${order.quantity} ${order.unit} has been placed!`);
-            }
-            
-            function submitToFormSubmit() {
+                alert(`Thank you!\nYour order #${orderId} for ${quantity} ${order.unit} has been placed!`);
+                
+                // Submit to FormSubmit after a delay
                 setTimeout(() => {
                     const formData = new FormData(orderForm);
                     fetch(orderForm.action, {
                         method: 'POST',
                         body: formData
-                    }).catch(error => {
-                        console.error('FormSubmit error:', error);
                     });
                 }, 100);
+            });
+            
+            function addOrderToDisplay(order) {
+                // Remove "no orders" message if it exists
+                const noOrdersMsg = ordersList.querySelector('.no-orders');
+                if (noOrdersMsg) {
+                    noOrdersMsg.remove();
+                }
+                
+                // Create order card
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                
+                // Format date
+                const orderDate = new Date(order.timestamp);
+                const formattedDate = orderDate.toLocaleString();
+                
+                // Generate order ID
+                const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
+                
+                // Create HTML for order
+                orderCard.innerHTML = `
+                    <h3>${adminMode ? order.name : orderId}</h3>
+                    <p><strong>${order.item}</strong> - ${order.quantity} ${order.unit}</p>
+                    ${order.specialRequests !== 'None' ? `<p><strong>Notes:</strong> ${order.specialRequests}</p>` : ''}
+                    <p class="order-time">Ordered: ${formattedDate}</p>
+                `;
+                
+                // Add to top of list
+                ordersList.insertBefore(orderCard, ordersList.firstChild);
             }
             
-            function showModal(title, message) {
-                document.querySelector('.modal-title').textContent = title;
-                modalMessage.textContent = message;
-                orderModal.style.display = 'flex';
+            function saveOrder(order) {
+                let orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
+                orders.unshift(order);
+                localStorage.setItem('lolaCookieOrders', JSON.stringify(orders));
             }
             
-            function closeModal() {
-                orderModal.style.display = 'none';
+            function loadOrders() {
+                const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
+                
+                if (orders.length > 0) {
+                    // Remove "no orders" message if it exists
+                    const noOrdersMsg = ordersList.querySelector('.no-orders');
+                    if (noOrdersMsg) {
+                        noOrdersMsg.remove();
+                    }
+                    
+                    // Clear and rebuild orders list
+                    ordersList.innerHTML = '';
+                    orders.forEach(order => addOrderToDisplay(order));
+                } else {
+                    ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
+                }
             }
+            
+            // Initial load
+            loadOrders();
         });
     </script>
 </body>
