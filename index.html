@@ -1,184 +1,85 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const orderForm = document.getElementById('orderForm');
-    const ordersList = document.getElementById('ordersList');
-    const ownerEmail = 'julioagapito.com'; // Replace with your email
-    
-    // Load existing orders from localStorage
-    loadOrders();
-    
-    // Handle form submission
-    orderForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        try {
-            // Get form values
-            const name = document.getElementById('name').value.trim();
-            const item = document.getElementById('item').value;
-            const quantity = document.getElementById('quantity').value;
-            const specialRequests = document.getElementById('special-requests').value.trim();
-            
-            // Validate inputs
-            if (!name || !item || !quantity) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Create order object
-            const order = {
-                name,
-                item,
-                quantity,
-                specialRequests: specialRequests || 'None',
-                timestamp: new Date().toISOString(),
-                status: 'Received'
-            };
-            
-            // Add order to display
-            addOrderToDisplay(order);
-            
-            // Save order to localStorage
-            saveOrder(order);
-            
-            // Send notification
-            await sendOrderNotification(order);
-            
-            // Reset form
-            orderForm.reset();
-            
-            // Show confirmation
-            showAlert(`Thank you, ${name}! Your order for ${quantity} dozen ${item} cookies has been placed!`);
-            
-        } catch (error) {
-            console.error('Order submission error:', error);
-            showAlert('There was an error processing your order. Please try again.');
-        }
-    });
-    
-    function addOrderToDisplay(order) {
-        // Remove "no orders" message if it exists
-        const noOrdersMsg = ordersList.querySelector('.no-orders');
-        if (noOrdersMsg) {
-            noOrdersMsg.remove();
-        }
-        
-        // Create order card
-        const orderCard = document.createElement('div');
-        orderCard.className = 'order-card';
-        
-        // Format date
-        const orderDate = new Date(order.timestamp);
-        const formattedDate = orderDate.toLocaleString();
-        
-        // Create HTML for order
-        orderCard.innerHTML = `
-            <h3>${order.name}</h3>
-            <p><strong>Status:</strong> <span class="status-${order.status.toLowerCase()}">${order.status}</span></p>
-            <p><strong>Cookie Type:</strong> ${order.item}</p>
-            <p><strong>Quantity:</strong> ${order.quantity} dozen</p>
-            ${order.specialRequests !== 'None' ? `<p><strong>Special Requests:</strong> ${order.specialRequests}</p>` : ''}
-            <p class="order-time">Ordered at: ${formattedDate}</p>
-            <button class="status-btn" data-id="${order.timestamp}">Mark as Ready</button>
-        `;
-        
-        // Add to top of list
-        ordersList.insertBefore(orderCard, ordersList.firstChild);
-        
-        // Add event listener to status button
-        orderCard.querySelector('.status-btn').addEventListener('click', function() {
-            updateOrderStatus(order.timestamp, 'Ready');
-        });
-    }
-    
-    function saveOrder(order) {
-        try {
-            let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-            orders.unshift(order);
-            localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
-        } catch (error) {
-            console.error('Error saving order:', error);
-        }
-    }
-    
-    function loadOrders() {
-        try {
-            const orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-            
-            if (orders.length > 0) {
-                // Remove "no orders" message if it exists
-                const noOrdersMsg = ordersList.querySelector('.no-orders');
-                if (noOrdersMsg) {
-                    noOrdersMsg.remove();
-                }
-                
-                // Add each order to display
-                orders.forEach(order => addOrderToDisplay(order));
-            }
-        } catch (error) {
-            console.error('Error loading orders:', error);
-        }
-    }
-    
-    function updateOrderStatus(timestamp, newStatus) {
-        try {
-            let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-            const orderIndex = orders.findIndex(o => o.timestamp === timestamp);
-            
-            if (orderIndex !== -1) {
-                orders[orderIndex].status = newStatus;
-                localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
-                
-                // Refresh display
-                ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
-                loadOrders();
-                
-                // Notify customer if status is "Ready"
-                if (newStatus === 'Ready') {
-                    const order = orders[orderIndex];
-                    notifyCustomer(order);
-                }
-            }
-        } catch (error) {
-            console.error('Error updating order status:', error);
-        }
-    }
-    
-    async function sendOrderNotification(order) {
-        // Using FormSubmit.co (free service)
-        const formData = new FormData();
-        formData.append('_replyto', 'julioagapito119@gmail.com');
-        formData.append('_subject', `New Order: ${order.name}`);
-        formData.append('message', `
-            New Order Details:
-            Name: ${order.name}
-            Item: ${order.item}
-            Quantity: ${order.quantity} dozen
-            Special Requests: ${order.specialRequests}
-            Time: ${new Date(order.timestamp).toLocaleString()}
-        `);
-        
-        try {
-            const response = await fetch('https://formsubmit.co/ajax/julioagapito119@gmail.com', {
-                method: 'POST',
-                body: formData
-            });
-    
-            if (!response.ok) {
-                console.error('Failed to send notification:', await response.text());
-            }
-        } catch (error) {
-            console.error('Notification failed:', error);
-        }
-    }
-    
-    
-    function notifyCustomer(order) {
-        // In a real app, you would send an email/SMS here
-        console.log(`Order ready notification for ${order.name}`);
-        // Example: You could integrate with Twilio for SMS or EmailJS for emails
-    }
-    
-    function showAlert(message) {
-        // Replace with a nicer alert system if desired
-        alert(message);
-    }
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LOLA COOKIES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <img src="cookiesinatub.jpg" alt="Lola Cookies" class="header-image">
+    <div class="container">
+        <header>
+            <h1>LOLA COOKIES</h1>
+        </header>
+
+        <div class="content">
+            <div class="order-form">
+                <h2>Place Your Order</h2>
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Cookie Type</label>
+                        <input type="text" value="Chocolate Chip Cookies" readonly class="read-only-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>How would you like to order?</label>
+                        <div class="quantity-options">
+                            <label class="quantity-choice">
+                                <input type="radio" name="orderType" value="tub" checked>
+                                <div class="choice-content">
+                                    <div class="choice-icon">🍯</div>
+                                    <div class="choice-text">
+                                        <div class="choice-title">By the Tub</div>
+                                        <div class="choice-desc">Perfect for sharing</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="quantity-choice">
+                                <input type="radio" name="orderType" value="piece">
+                                <div class="choice-content">
+                                    <div class="choice-icon">🍪</div>
+                                    <div class="choice-text">
+                                        <div class="choice-title">By the Piece</div>
+                                        <div class="choice-desc">Individual cookies</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="quantityContainer">
+                        <label for="quantity">Number of Tubs</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="special-requests">Special Instructions</label>
+                        <textarea id="special-requests" name="special-requests" placeholder="Any special requests or allergy information"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Place Order</button>
+                </form>
+            </div>
+
+            <div class="orders-display">
+                <h2>Recent Orders</h2>
+                <div id="ordersList">
+                    <p class="no-orders">No orders yet. Be the first to order!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="admin-toggle" title="Toggle Admin View">👑</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
