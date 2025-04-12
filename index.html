@@ -1,460 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lola Cookies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #e39f9f;
-            --primary-light: #120808;
-            --secondary: #fac21a;
-            --dark: #cc2c2c;
-            --light: #F5F5F5;
-            --gray: #E0E0E0;
-            --white: #FFFFFF;
-        }
-        
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            color: var(--dark);
-            line-height: 1.6;
-            -webkit-text-size-adjust: 100%;
-            background: url('cookieinatub.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-        
-        body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.3);
-            z-index: -1;
-        }
-        
-        header {
-            background: var(--dark);
-            color: var(--white);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        #logo {
-            font-weight: 700;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-        
-        #logo::before {
-            content: "🍪";
-            font-size: 1.5rem;
-        }
-        
-        .main-container {
-            padding: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .card h2 {
-            margin-top: 0;
-            color: var(--primary);
-            padding-bottom: 0.5rem;
-            font-size: 1.4rem;
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 0.95rem;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid var(--gray);
-            border-radius: 8px;
-            font-family: inherit;
-            background: var(--white);
-            font-size: 1rem;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .submit-btn {
-            background: var(--dark);
-            color: var(--white);
-            border: none;
-            padding: 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            display: block;
-            margin-top: 1.5rem;
-        }
-        
-        .submit-btn:active {
-            transform: scale(0.98);
-            background: var(--primary);
-        }
-        
-        .order-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1.1rem;
-            margin-bottom: 1rem;
-            border-left: 5px solid var(--secondary);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        
-        .order-card h3 {
-            margin: 0 0 0.5rem 0;
-            color: var(--primary);
-            font-size: 1.15rem;
-        }
-        
-        .order-card p {
-            margin: 0.4rem 0;
-            font-size: 0.95rem;
-        }
-        
-        .order-time {
-            font-size: 0.8rem;
-            color: #757575;
-            margin-top: 0.5rem !important;
-        }
-        
-        .no-orders {
-            text-align: center;
-            padding: 1.5rem;
-            color: #757575;
-            font-style: italic;
-        }
-        
-        footer {
-            background: var(--dark);
-            color: var(--white);
-            padding: 1.25rem;
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.25rem;
-            list-style: none;
-            padding: 0;
-            margin: 0.75rem 0 0 0;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .quantity-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
-        }
-        
-        .quantity-choice {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            background: var(--gray);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .quantity-choice input {
-            display: none;
-        }
-        
-        .quantity-choice input:checked + .choice-content {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-        
-        .choice-content {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 6px;
-            background: var(--white);
-        }
-        
-        .choice-icon {
-            font-size: 1.5rem;
-            margin-right: 0.75rem;
-        }
-        
-        .choice-text {
-            flex: 1;
-        }
-        
-        .choice-title {
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-        }
-        
-        .choice-desc {
-            font-size: 0.85rem;
-            color: #616161;
-        }
-        
-        /* Admin toggle button */
-        #admin-toggle {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: var(--dark);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 1000;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        
-        #admin-toggle:hover {
-            opacity: 1;
-        }
-        
-        @media (max-width: 480px) {
-            .card {
-                padding: 1rem;
-                border-radius: 10px;
-            }
-            
-            .card h2 {
-                font-size: 1.3rem;
-            }
-            
-            input, textarea, select {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-            }
-            
-            .submit-btn {
-                padding: 0.9rem;
-                font-size: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lola Cookies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <div id="logo">Lola Cookies</div>
-    </header>
+  <header>
+    <div id="logo">Lola Cookies</div>
+  </header>
 
-    <div class="main-container">
-        <div class="card">
-            <h2>Place Your Order</h2>
-            <form id="orderForm" action="https://formsubmit.co/julioagapito119@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="New Cookie Order">
-                <input type="hidden" name="_template" value="table">
-                
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Enter your name">
-                </div>
-                
-                <div class="form-group">
-                    <label>Cookie Type</label>
-                    <input type="text" value="Chocolate Chip Cookies" readonly style="background: #EEEEEE; font-weight: 600;">
-                </div>
-                
-                <div class="form-group">
-                    <label>How would you like to order?</label>
-                    <div class="quantity-options">
-                        <label class="quantity-choice">
-                            <input type="radio" name="orderType" value="tub" checked>
-                            <div class="choice-content">
-                                <div class="choice-icon">🍯</div>
-                                <div class="choice-text">
-                                    <div class="choice-title">By the Tub</div>
-                                    <div class="choice-desc">Perfect for sharing or parties</div>
-                                </div>
-                            </div>
-                        </label>
-                        
-                        <label class="quantity-choice">
-                            <input type="radio" name="orderType" value="piece">
-                            <div class="choice-content">
-                                <div class="choice-icon">🍪</div>
-                                <div class="choice-text">
-                                    <div class="choice-title">By the Piece</div>
-                                    <div class="choice-desc">Individual cookies</div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group" id="quantityContainer">
-                    <label for="quantity">Number of Tubs</label>
-                    <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="special-requests">Special Instructions</label>
-                    <textarea id="special-requests" name="special-requests" placeholder="Any special requests or allergy information"></textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">Place Order</button>
-            </form>
+  <div class="main-container">
+    <div class="card">
+      <h2>Place Your Order</h2>
+      <form id="orderForm" action="https://formsubmit.co/julioagapito119@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Cookie Order" />
+        <input type="hidden" name="_template" value="table" />
+
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required placeholder="Enter your name" />
         </div>
 
-        <div class="card">
-            <h2>Recent Orders</h2>
-            <div id="ordersList">
-                <p class="no-orders">No orders yet. Be the first to order!</p>
-            </div>
+        <div class="form-group">
+          <label for="item">Cookie Type</label>
+          <input type="text" id="item" name="item" value="Chocolate Chip Cookies" readonly style="background: #EEEEEE; font-weight: 600;" />
         </div>
+
+        <div class="form-group">
+          <label>How would you like to order?</label>
+          <div class="quantity-options">
+            <label class="quantity-choice">
+              <input type="radio" name="orderType" value="tub" checked />
+              <div class="choice-content">
+                <div class="choice-icon">🍯</div>
+                <div class="choice-text">
+                  <div class="choice-title">By the Tub</div>
+                  <div class="choice-desc">Perfect for sharing or parties</div>
+                </div>
+              </div>
+            </label>
+
+            <label class="quantity-choice">
+              <input type="radio" name="orderType" value="piece" />
+              <div class="choice-content">
+                <div class="choice-icon">🍪</div>
+                <div class="choice-text">
+                  <div class="choice-title">By the Piece</div>
+                  <div class="choice-desc">Individual cookies</div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="quantityContainer">
+          <label for="quantity">Number of Tubs</label>
+          <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" required />
+        </div>
+
+        <div class="form-group">
+          <label for="special-requests">Special Instructions</label>
+          <textarea id="special-requests" name="special-requests" placeholder="Any special requests or allergy information"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Place Order</button>
+      </form>
     </div>
 
-    <footer>
-        <div>© 2023 Lola's Chocolate Chip Cookies</div>
-        <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">FAQ</a></li>
-        </ul>
-    </footer>
+    <div class="card">
+      <h2>Recent Orders</h2>
+      <div id="ordersList">
+        <p class="no-orders">No orders yet. Be the first to order!</p>
+      </div>
+    </div>
+  </div>
 
-    <button id="admin-toggle" title="Toggle Admin View">👑</button>
+  <footer>
+    <div>© 2023 Lola's Chocolate Chip Cookies</div>
+    <ul class="footer-links">
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+  </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const orderForm = document.getElementById('orderForm');
-            const ordersList = document.getElementById('ordersList');
-            const quantityContainer = document.getElementById('quantityContainer');
-            const orderTypeRadios = document.querySelectorAll('input[name="orderType"]');
-            const adminToggle = document.getElementById('admin-toggle');
-            
-            let adminMode = false;
-            
-            // Toggle admin view
-            adminToggle.addEventListener('click', function() {
-                adminMode = !adminMode;
-                loadOrders();
-                this.style.opacity = adminMode ? '1' : '0.5';
-                this.title = adminMode ? 'Admin Mode (Hide Names)' : 'Admin Mode (Show Names)';
-            });
-            
-            // Update quantity label based on selection
-            orderTypeRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'piece') {
-                        quantityContainer.querySelector('label').textContent = 'Number of Cookies';
-                        document.getElementById('quantity').max = '100';
-                        document.getElementById('quantity').value = '6';
-                    } else {
-                        quantityContainer.querySelector('label').textContent = 'Number of Tubs';
-                        document.getElementById('quantity').max = '20';
-                        document.getElementById('quantity').value = '1';
-                    }
-                });
-            });
-            
-            // Handle form submission
-            orderForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const name = document.getElementById('name').value;
-                const orderType = document.querySelector('input[name="orderType"]:checked').value;
-                const quantity = document.getElementById('quantity').value;
-                const specialRequests = document.getElementById('special-requests').value;
-                
-                // Create order object
-                const order = {
-                    name,
-                    item: "Chocolate Chip Cookies",
-                    orderType,
-                    quantity,
-                    unit: orderType === 'piece' ? 'pieces' : 'tubs',
-                    specialRequests: specialRequests || 'None',
-                    timestamp: new Date().toISOString()
-                };
-                
-                // Add order to display
-                addOrderToDisplay(order);
-                
-                // Save order to localStorage
-                saveOrder(order);
-                
-                // Reset form
-                orderForm.reset();
-                document.querySelector('input[name="orderType"][value="tub"]').checked = true;
-                quantityContainer.querySelector('label').textContent = 'Number of Tubs';
-                document.getElementById('quantity').max = '20';
-                document.getElementById('quantity').value = '1';
-                
-                // Show confirmation
-                const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
-                alert(`Thank you!\nYour order #${orderId} for ${quantity} ${order.unit} has been placed!`);
-                
-                // Submit to FormSubmit after a delay
-                setTimeout(() => {
-                    const formData = new FormData(orderForm);
-                    fetch(orderForm.action, {
-                        method: 'POST',
-                        body: formData
-                    });
-                }, 100);
-            });
-            
+  <button id="admin-toggle" title="Toggle Admin View">👑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
