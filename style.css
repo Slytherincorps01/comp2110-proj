@@ -1,170 +1,187 @@
-:root {
-    --primary: #e39f9f;
-    --primary-light: #120808;
-    --secondary: #fac21a;
-    --dark: #cc2c2c;
-    --light: #F5F5F5;
-    --gray: #E0E0E0;
-    --white: #FFFFFF;
-}
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    margin: 0;
-    min-height: 100vh;
-    color: var(--dark);
+    font-family: 'Quicksand', sans-serif;
     line-height: 1.6;
-    -webkit-text-size-adjust: 100%;
-    background: url('cookieinatub.jpg') no-repeat center center fixed;
-    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #5a3921;
     position: relative;
+    min-height: 100vh;
 }
 
-body::after {
-    content: '';
-    position: absolute;
+.cookie-background {
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    height: 100%;
+    background-image: url('Screenshot 2025-04-12 022458.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
     z-index: -1;
 }
 
-header {
-    background: var(--dark);
-    color: var(--white);
-    padding: 1rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-#logo {
-    font-weight: 700;
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-#logo::before {
-    content: "🍪";
-    font-size: 1.5rem;
-}
-
-.main-container {
-    padding: 1rem;
-    max-width: 600px;
+.container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
 }
 
-.card {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.card h2 {
-    margin-top: 0;
-    color: var(--primary);
-    padding-bottom: 0.5rem;
-    font-size: 1.4rem;
+header {
     text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: rgba(234, 55, 42, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-family: 'Cookie', cursive;
+    font-size: 4rem;
+    margin: 0;
+    color: #8b4513;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+header p {
+    font-size: 1.2rem;
+    margin: 5px 0 0;
+    color: #5a3921;
+}
+
+.order-form, .orders-display {
+    background: rgba(255, 248, 240, 0.9);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    font-family: 'Cookie', cursive;
+    font-size: 2.5rem;
+    color: #8b4513;
+    margin-top: 0;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--dark);
-    font-size: 0.95rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #5a3921;
 }
 
-input, textarea, select {
+input[type="text"],
+input[type="number"],
+select,
+textarea {
     width: 100%;
-    padding: 0.9rem;
-    border: 2px solid var(--gray);
-    border-radius: 8px;
-    font-family: inherit;
-    background: var(--white);
-    font-size: 1rem;
-    -webkit-appearance: none;
-    appearance: none;
+    padding: 12px;
+    border: 1px solid #f13737;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fffdf9;
+    font-family: 'Quicksand', sans-serif;
 }
 
 textarea {
-    min-height: 100px;
+    height: 100px;
     resize: vertical;
 }
 
-.submit-btn {
-    background: var(--dark);
-    color: var(--white);
-    border: none;
-    padding: 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    width: 100%;
-    display: block;
-    margin-top: 1.5rem;
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235a3921'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
 }
 
-.submit-btn:active {
-    transform: scale(0.98);
-    background: var(--primary);
+.submit-btn {
+    background-color: #d4a76a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+    background-color: #b38b52;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .order-card {
-    background: var(--white);
-    border-radius: 10px;
-    padding: 1.1rem;
-    margin-bottom: 1rem;
-    border-left: 5px solid var(--secondary);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: 1px solid #e6d5b8;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .order-card h3 {
-    margin: 0 0 0.5rem 0;
-    color: var(--primary);
-    font-size: 1.15rem;
+    margin-top: 0;
+    color: #8b4513;
+    font-size: 1.4rem;
 }
 
 .order-card p {
-    margin: 0.4rem 0;
-    font-size: 0.95rem;
+    margin: 8px 0;
+    color: #5a3921;
 }
 
 .order-time {
-    font-size: 0.8rem;
-    color: #757575;
-    margin-top: 0.5rem !important;
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 15px !important;
 }
 
 .no-orders {
     text-align: center;
-    padding: 1.5rem;
-    color: #757575;
+    color: #8b4513;
     font-style: italic;
+    padding: 20px;
 }
 
-footer {
-    background: var(--dark);
-    color: var(--white);
-   
+@media (min-width: 768px) {
+    .content {
+        display: flex;
+        gap: 30px;
+    }
+    
+    .order-form {
+        flex: 1;
+    }
+    
+    .orders-display {
+        flex: 2;
+    }
+    
+    .submit-btn {
+        width: auto;
+    }
+    .status-received { color: #FFA500; font-weight: bold; }
+.status-ready { color: #008000; font-weight: bold; }
+.status-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+}
