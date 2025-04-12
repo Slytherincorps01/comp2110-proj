@@ -74,6 +74,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(orderForm);
         formData.append('order_id', orderId);
         
+        // Add additional order details
+        formData.append('order_details', JSON.stringify({
+            item: order.item,
+            quantity: order.quantity,
+            unit: order.unit,
+            specialRequests: order.specialRequests
+        }));
+        
         fetch(orderForm.action, {
             method: 'POST',
             body: formData
@@ -81,12 +89,29 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => {
             if (!response.ok) {
                 console.error('Form submission failed');
+                // Fallback email method if FormSubmit fails
+                sendFallbackEmail(order);
             }
         })
         .catch(error => {
             console.error('Error submitting form:', error);
+            sendFallbackEmail(order);
         });
     });
+    
+    function sendFallbackEmail(order) {
+        // This is a client-side fallback using mailto:
+        const subject = `New Cookie Order from ${order.name}`;
+        const body = `Order Details:
+Name: ${order.name}
+Email: ${order.email}
+Item: ${order.item}
+Quantity: ${order.quantity} ${order.unit}
+Special Requests: ${order.specialRequests}
+Order ID: ORD-${order.timestamp.slice(-6).replace(/\D/g, '')}`;
+        
+        window.location.href = `mailto:julioagapito119@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
     
     function addOrderToDisplay(order) {
         // Remove "no orders" message if it exists
