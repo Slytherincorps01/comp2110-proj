@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const orderForm = document.getElementById('orderForm');
+    const ordersList = document.getElementById('ordersList');
     const quantityContainer = document.getElementById('quantityContainer');
     const orderTypeRadios = document.querySelectorAll('input[name="orderType"]');
     const adminToggle = document.getElementById('admin-toggle');
@@ -69,67 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
         alert(`Thank you, ${name}!\nYour order #${orderId} for ${quantity} ${order.unit} has been placed!\nA confirmation will be sent to ${email}`);
         
-        // Prepare email data
-        const emailData = {
-            name: name,
-            email: email,
-            orderType: orderType,
-            quantity: quantity,
-            unit: order.unit,
-            specialRequests: order.specialRequests,
-            orderId: orderId,
-            date: new Date().toLocaleString()
-        };
-        
-        // Send email to owner and customer
-        sendEmailConfirmation(emailData);
-    });
-    
-    function sendEmailConfirmation(data) {
-        // Email to owner
-        const ownerEmailData = {
-            service_id: 'your_service_id', // Replace with your email service ID
-            template_id: 'owner_template', // Replace with your template ID
-            user_id: 'your_user_id', // Replace with your user ID
-            template_params: {
-                'customer_name': data.name,
-                'customer_email': data.email,
-                'order_type': data.orderType === 'piece' ? 'By the Piece' : 'By the Tub',
-                'quantity': data.quantity,
-                'unit': data.unit,
-                'special_requests': data.specialRequests,
-                'order_id': data.orderId,
-                'date': data.date,
-                'to_email': 'julioagapito119@gmail.com'
-            }
-        };
-        
-        // Email to customer
-        const customerEmailData = {
-            service_id: 'your_service_id', // Same as above
-            template_id: 'customer_template', // Replace with your template ID
-            user_id: 'your_user_id', // Same as above
-            template_params: {
-                'customer_name': data.name,
-                'order_type': data.orderType === 'piece' ? 'By the Piece' : 'By the Tub',
-                'quantity': data.quantity,
-                'unit': data.unit,
-                'special_requests': data.specialRequests,
-                'order_id': data.orderId,
-                'date': data.date,
-                'to_email': data.email
-            }
-        };
-        
-        // Send emails using EmailJS or your preferred service
-        // Note: You'll need to implement the actual email sending functionality
-        // This is just a template showing what data to send
-        
-        // Example using FormSubmit (simpler alternative)
+        // Submit to FormSubmit
         const formData = new FormData(orderForm);
-        formData.append('_replyto', data.email);
-        formData.append('_subject', `New Cookie Order from ${data.name}`);
-        formData.append('order_id', data.orderId);
+        formData.append('order_id', orderId);
         
         fetch(orderForm.action, {
             method: 'POST',
@@ -143,11 +86,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error submitting form:', error);
         });
-    }
+    });
     
     function addOrderToDisplay(order) {
-        const ordersList = document.getElementById('ordersList');
-        
         // Remove "no orders" message if it exists
         const noOrdersMsg = ordersList.querySelector('.no-orders');
         if (noOrdersMsg) {
@@ -185,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function loadOrders() {
-        const ordersList = document.getElementById('ordersList');
         const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
         
         if (orders.length > 0) {
