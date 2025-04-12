@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // State
     let adminMode = false;
-    const ownerEmail = 'julioagapito119@gmail.com';
+    const ownerEmail = 'hsmndevera@gmail.com';
     
     // Initialize
     initEventListeners();
