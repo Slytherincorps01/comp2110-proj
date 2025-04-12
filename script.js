@@ -1,19 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
     const orderForm = document.getElementById('orderForm');
     const ordersList = document.getElementById('ordersList');
-    const ownerEmail = 'julioagapito119@gmail.com'; // Your real email
+    const ownerEmail = 'julioagapito119@gmail.com';
 
-    // Load existing orders from localStorage
+    // Load existing orders
     loadOrders();
 
     // Handle form submission
     orderForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // Get form values
         const name = document.getElementById('name').value.trim();
         const item = document.getElementById('item').value;
         const quantity = document.getElementById('quantity').value;
+        const orderType = document.querySelector('input[name="orderType"]:checked').value;
+        const unit = orderType === 'piece' ? 'pieces' : 'tubs';
         const specialRequests = document.getElementById('special-requests').value.trim();
 
         if (!name || !item || !quantity) {
@@ -24,7 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const order = {
             name,
             item,
+            orderType,
             quantity,
+            unit,
             specialRequests: specialRequests || 'None',
             timestamp: new Date().toISOString(),
             status: 'Received'
@@ -35,7 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
         await sendOrderNotification(order);
 
         orderForm.reset();
-        showAlert(`Thank you, ${name}! Your order for ${quantity} dozen ${item} cookies has been placed!`);
+        document.querySelector('input[name="orderType"][value="tub"]').checked = true;
+        document.getElementById('quantity').value = 1;
+
+        showAlert(`Thank you, ${name}! Your order for ${quantity} ${unit} of ${item} has been placed!`);
     });
 
     function addOrderToDisplay(order) {
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <h3>${order.name}</h3>
             <p><strong>Status:</strong> <span class="status-${order.status.toLowerCase()}">${order.status}</span></p>
             <p><strong>Cookie Type:</strong> ${order.item}</p>
-            <p><strong>Quantity:</strong> ${order.quantity} dozen</p>
+            <p><strong>Quantity:</strong> ${order.quantity} ${order.unit}</p>
             ${order.specialRequests !== 'None' ? `<p><strong>Special Requests:</strong> ${order.specialRequests}</p>` : ''}
             <p class="order-time">Ordered at: ${formattedDate}</p>
             <button class="status-btn" data-id="${order.timestamp}">Mark as Ready</button>
@@ -104,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             New Cookie Order:
             Name: ${order.name}
             Item: ${order.item}
-            Quantity: ${order.quantity} dozen
+            Quantity: ${order.quantity} ${order.unit}
             Special Requests: ${order.specialRequests}
             Time: ${new Date(order.timestamp).toLocaleString()}
         `);
@@ -121,10 +127,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function notifyCustomer(order) {
         console.log(`Order ready notification for ${order.name}`);
-        // Extend this for email/SMS if needed.
+        // Extend with real notification (email/text) if needed.
     }
 
     function showAlert(message) {
-        alert(message); // You can replace this with custom modal if you want
+        alert(message); // Replace with custom modal if needed
     }
 });
