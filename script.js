@@ -1,136 +1,208 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const orderForm = document.getElementById('orderForm');
-    const ordersList = document.getElementById('ordersList');
-    const ownerEmail = 'julioagapito119@gmail.com';
-
-    // Load existing orders
-    loadOrders();
-
+    const quantityContainer = document.getElementById('quantityContainer');
+    const orderTypeRadios = document.querySelectorAll('input[name="orderType"]');
+    const adminToggle = document.getElementById('admin-toggle');
+    
+    let adminMode = false;
+    
+    // Toggle admin view
+    adminToggle.addEventListener('click', function() {
+        adminMode = !adminMode;
+        loadOrders();
+        this.style.opacity = adminMode ? '1' : '0.5';
+        this.title = adminMode ? 'Admin Mode (Hide Names)' : 'Admin Mode (Show Names)';
+    });
+    
+    // Update quantity label based on selection
+    orderTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'piece') {
+                quantityContainer.querySelector('label').textContent = 'Number of Cookies';
+                document.getElementById('quantity').max = '100';
+                document.getElementById('quantity').value = '6';
+            } else {
+                quantityContainer.querySelector('label').textContent = 'Number of Tubs';
+                document.getElementById('quantity').max = '20';
+                document.getElementById('quantity').value = '1';
+            }
+        });
+    });
+    
     // Handle form submission
-    orderForm.addEventListener('submit', async function (e) {
+    orderForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
-        const name = document.getElementById('name').value.trim();
-        const item = document.getElementById('item').value;
-        const quantity = document.getElementById('quantity').value;
+        
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
         const orderType = document.querySelector('input[name="orderType"]:checked').value;
-        const unit = orderType === 'piece' ? 'pieces' : 'tubs';
-        const specialRequests = document.getElementById('special-requests').value.trim();
-
-        if (!name || !item || !quantity) {
-            alert('Please fill in all required fields');
-            return;
-        }
-
+        const quantity = document.getElementById('quantity').value;
+        const specialRequests = document.getElementById('special-requests').value;
+        
+        // Create order object
         const order = {
             name,
-            item,
+            email,
+            item: "Chocolate Chip Cookies",
             orderType,
             quantity,
-            unit,
+            unit: orderType === 'piece' ? 'pieces' : 'tubs',
             specialRequests: specialRequests || 'None',
-            timestamp: new Date().toISOString(),
-            status: 'Received'
+            timestamp: new Date().toISOString()
         };
-
+        
+        // Add order to display
         addOrderToDisplay(order);
+        
+        // Save order to localStorage
         saveOrder(order);
-        await sendOrderNotification(order);
-
+        
+        // Reset form
         orderForm.reset();
         document.querySelector('input[name="orderType"][value="tub"]').checked = true;
-        document.getElementById('quantity').value = 1;
-
-        showAlert(`Thank you, ${name}! Your order for ${quantity} ${unit} of ${item} has been placed!`);
+        quantityContainer.querySelector('label').textContent = 'Number of Tubs';
+        document.getElementById('quantity').max = '20';
+        document.getElementById('quantity').value = '1';
+        
+        // Show confirmation
+        const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
+        alert(`Thank you, ${name}!\nYour order #${orderId} for ${quantity} ${order.unit} has been placed!\nA confirmation will be sent to ${email}`);
+        
+        // Prepare email data
+        const emailData = {
+            name: name,
+            email: email,
+            orderType: orderType,
+            quantity: quantity,
+            unit: order.unit,
+            specialRequests: order.specialRequests,
+            orderId: orderId,
+            date: new Date().toLocaleString()
+        };
+        
+        // Send email to owner and customer
+        sendEmailConfirmation(emailData);
     });
-
-    function addOrderToDisplay(order) {
-        const noOrdersMsg = ordersList.querySelector('.no-orders');
-        if (noOrdersMsg) noOrdersMsg.remove();
-
-        const orderCard = document.createElement('div');
-        orderCard.className = 'order-card';
-
-        const formattedDate = new Date(order.timestamp).toLocaleString();
-
-        orderCard.innerHTML = `
-            <h3>${order.name}</h3>
-            <p><strong>Status:</strong> <span class="status-${order.status.toLowerCase()}">${order.status}</span></p>
-            <p><strong>Cookie Type:</strong> ${order.item}</p>
-            <p><strong>Quantity:</strong> ${order.quantity} ${order.unit}</p>
-            ${order.specialRequests !== 'None' ? `<p><strong>Special Requests:</strong> ${order.specialRequests}</p>` : ''}
-            <p class="order-time">Ordered at: ${formattedDate}</p>
-            <button class="status-btn" data-id="${order.timestamp}">Mark as Ready</button>
-        `;
-
-        ordersList.insertBefore(orderCard, ordersList.firstChild);
-
-        orderCard.querySelector('.status-btn').addEventListener('click', function () {
-            updateOrderStatus(order.timestamp, 'Ready');
+    
+    function sendEmailConfirmation(data) {
+        // Email to owner
+        const ownerEmailData = {
+            service_id: 'your_service_id', // Replace with your email service ID
+            template_id: 'owner_template', // Replace with your template ID
+            user_id: 'your_user_id', // Replace with your user ID
+            template_params: {
+                'customer_name': data.name,
+                'customer_email': data.email,
+                'order_type': data.orderType === 'piece' ? 'By the Piece' : 'By the Tub',
+                'quantity': data.quantity,
+                'unit': data.unit,
+                'special_requests': data.specialRequests,
+                'order_id': data.orderId,
+                'date': data.date,
+                'to_email': 'julioagapito119@gmail.com'
+            }
+        };
+        
+        // Email to customer
+        const customerEmailData = {
+            service_id: 'your_service_id', // Same as above
+            template_id: 'customer_template', // Replace with your template ID
+            user_id: 'your_user_id', // Same as above
+            template_params: {
+                'customer_name': data.name,
+                'order_type': data.orderType === 'piece' ? 'By the Piece' : 'By the Tub',
+                'quantity': data.quantity,
+                'unit': data.unit,
+                'special_requests': data.specialRequests,
+                'order_id': data.orderId,
+                'date': data.date,
+                'to_email': data.email
+            }
+        };
+        
+        // Send emails using EmailJS or your preferred service
+        // Note: You'll need to implement the actual email sending functionality
+        // This is just a template showing what data to send
+        
+        // Example using FormSubmit (simpler alternative)
+        const formData = new FormData(orderForm);
+        formData.append('_replyto', data.email);
+        formData.append('_subject', `New Cookie Order from ${data.name}`);
+        formData.append('order_id', data.orderId);
+        
+        fetch(orderForm.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Form submission failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
         });
     }
-
+    
+    function addOrderToDisplay(order) {
+        const ordersList = document.getElementById('ordersList');
+        
+        // Remove "no orders" message if it exists
+        const noOrdersMsg = ordersList.querySelector('.no-orders');
+        if (noOrdersMsg) {
+            noOrdersMsg.remove();
+        }
+        
+        // Create order card
+        const orderCard = document.createElement('div');
+        orderCard.className = 'order-card';
+        
+        // Format date
+        const orderDate = new Date(order.timestamp);
+        const formattedDate = orderDate.toLocaleString();
+        
+        // Generate order ID
+        const orderId = 'ORD-' + order.timestamp.slice(-6).replace(/\D/g, '');
+        
+        // Create HTML for order
+        orderCard.innerHTML = `
+            <h3>${adminMode ? order.name : orderId}</h3>
+            ${adminMode ? `<p><strong>Email:</strong> ${order.email}</p>` : ''}
+            <p><strong>${order.item}</strong> - ${order.quantity} ${order.unit}</p>
+            ${order.specialRequests !== 'None' ? `<p><strong>Notes:</strong> ${order.specialRequests}</p>` : ''}
+            <p class="order-time">Ordered: ${formattedDate}</p>
+        `;
+        
+        // Add to top of list
+        ordersList.insertBefore(orderCard, ordersList.firstChild);
+    }
+    
     function saveOrder(order) {
-        let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
+        let orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
         orders.unshift(order);
-        localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
+        localStorage.setItem('lolaCookieOrders', JSON.stringify(orders));
     }
-
+    
     function loadOrders() {
-        const orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-
-        if (orders.length === 0) {
-            ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
-        } else {
-            orders.forEach(order => addOrderToDisplay(order));
-        }
-    }
-
-    function updateOrderStatus(timestamp, newStatus) {
-        let orders = JSON.parse(localStorage.getItem('lolaCookiesOrders')) || [];
-        const orderIndex = orders.findIndex(o => o.timestamp === timestamp);
-
-        if (orderIndex !== -1) {
-            orders[orderIndex].status = newStatus;
-            localStorage.setItem('lolaCookiesOrders', JSON.stringify(orders));
-            ordersList.innerHTML = '';
-            loadOrders();
-
-            if (newStatus === 'Ready') {
-                notifyCustomer(orders[orderIndex]);
+        const ordersList = document.getElementById('ordersList');
+        const orders = JSON.parse(localStorage.getItem('lolaCookieOrders')) || [];
+        
+        if (orders.length > 0) {
+            // Remove "no orders" message if it exists
+            const noOrdersMsg = ordersList.querySelector('.no-orders');
+            if (noOrdersMsg) {
+                noOrdersMsg.remove();
             }
+            
+            // Clear and rebuild orders list
+            ordersList.innerHTML = '';
+            orders.forEach(order => addOrderToDisplay(order));
+        } else {
+            ordersList.innerHTML = '<p class="no-orders">No orders yet. Be the first to order!</p>';
         }
     }
-
-    async function sendOrderNotification(order) {
-        const formData = new FormData();
-        formData.append('_replyto', ownerEmail);
-        formData.append('_subject', `New Order from ${order.name}`);
-        formData.append('message', `
-            New Cookie Order:
-            Name: ${order.name}
-            Item: ${order.item}
-            Quantity: ${order.quantity} ${order.unit}
-            Special Requests: ${order.specialRequests}
-            Time: ${new Date(order.timestamp).toLocaleString()}
-        `);
-
-        try {
-            await fetch(`https://formsubmit.co/ajax/${ownerEmail}`, {
-                method: 'POST',
-                body: formData
-            });
-        } catch (error) {
-            console.error('Notification failed:', error);
-        }
-    }
-
-    function notifyCustomer(order) {
-        console.log(`Order ready notification for ${order.name}`);
-        // Extend with real notification (email/text) if needed.
-    }
-
-    function showAlert(message) {
-        alert(message); // Replace with custom modal if needed
-    }
+    
+    // Initial load
+    loadOrders();
 });
